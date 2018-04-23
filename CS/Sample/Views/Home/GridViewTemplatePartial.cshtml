@@ -1,0 +1,75 @@
+﻿@model List<Sample.Models.Person>
+@Html.DevExpress().GridView(
+    settings => {
+        settings.Name = "grid";
+        settings.KeyFieldName = "PersonID";
+        settings.CallbackRouteValues = new { Controller = "Home", Action = "GridViewTemplatePartial" };
+
+        settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Home", Action = "EditingAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Home", Action = "EditingUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Home", Action = "EditingDelete" };
+
+        /*Command Column Emulation*/
+        settings.Columns.Add(column => {
+            column.Caption = "#";
+            
+            /*DataItemTemplate*/
+            /*New - Edit - Delete Buttons*/
+            column.SetDataItemTemplateContent(c => {
+                Html.DevExpress().HyperLink(hl => {
+                    hl.Name = "hlNew_" + c.KeyValue.ToString();
+                    hl.NavigateUrl = "javascript:;";
+                    hl.Properties.Text = "New";
+                    hl.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ {0}.AddNewRow(); }}", settings.Name);
+                }).Render();
+
+                ViewContext.Writer.Write("&nbsp;");
+
+                Html.DevExpress().HyperLink(hl => {
+                    hl.Name = "hlEdit_" + c.KeyValue.ToString();
+                    hl.NavigateUrl = "javascript:;";
+                    hl.Properties.Text = "Edit";
+                    hl.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ {0}.StartEditRow('{1}'); }}", settings.Name, c.VisibleIndex);
+                }).Render();
+
+                ViewContext.Writer.Write("&nbsp;");
+
+                Html.DevExpress().HyperLink(hl => {
+                    hl.Name = "hlDelete_" + c.KeyValue.ToString();
+                    hl.NavigateUrl = "javascript:;";
+                    hl.Properties.Text = "Delete";
+                    hl.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ {0}.DeleteRow('{1}'); }}", settings.Name, c.VisibleIndex);
+                }).Render();
+                
+            });
+            /*DataItemTemplate*/
+
+            /*EditItemTemplate*/
+            /*Update Button Only - No Cancel Button*/
+            column.SetEditItemTemplateContent(c => {
+                ViewContext.Writer.Write("<div style=\"text-align: right;\">");
+                
+                Html.DevExpress().HyperLink(hl => {
+                    hl.Name = "hlUpdate";
+                    hl.NavigateUrl = "javascript:;";
+                    
+                    hl.Properties.Text = c.Grid.IsNewRowEditing
+                        ? "Add"
+                        : "Update";
+                    
+                    hl.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ {0}.UpdateEdit(); }}", settings.Name);
+                }).Render();
+
+                ViewContext.Writer.Write("</div>");
+            });
+            /*EditItemTemplate*/
+            
+        });
+        /*Command Column Emulation*/
+
+        settings.Columns.Add("FirstName");
+        settings.Columns.Add("MiddleName");
+        settings.Columns.Add("LastName");
+    }
+).Bind(Model).GetHtml()
