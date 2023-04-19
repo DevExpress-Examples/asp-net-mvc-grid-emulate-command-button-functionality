@@ -5,7 +5,7 @@
 <!-- default badges end -->
 # Grid View for ASP.NET MVC - How to emulate command button functionality
 <!-- run online -->
-**[[Run Online]](https://codecentral.devexpress.com/e4058/)**
+**[[Run Online]](https://codecentral.devexpress.com/128551452/)**
 <!-- run online end -->
 
 This example demonstrates how to add custom buttons to a templated column and configure the grid's cell edit functionality.
