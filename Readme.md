@@ -14,7 +14,7 @@
 <!-- default file list end -->
 # How to emulate the Command Column with a data column DataItemTemplate
 <!-- run online -->
-**[[Run Online]](https://codecentral.devexpress.com/e4058)**
+**[[Run Online]](https://codecentral.devexpress.com/128551452/)**
 <!-- run online end -->
 
 
