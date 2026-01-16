@@ -25,6 +25,8 @@ Namespace Sample
             Call AreaRegistration.RegisterAllAreas()
             RegisterGlobalFilters(GlobalFilters.Filters)
             RegisterRoutes(RouteTable.Routes)
+
+            ModelBinders.Binders.DefaultBinder = new DevExpress.Web.Mvc.DevExpressEditorsBinder()
         End Sub
     End Class
 End Namespace
